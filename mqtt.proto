@@ -1,0 +1,46 @@
+syntax = "proto2";
+
+
+message Payload
+{
+    required string topic=1;
+    optional string message=2;
+}
+
+message Response
+{
+    enum Status 
+    {
+        ACK=0;
+        NACK=1;
+    }
+    required Status status=1;
+}
+message Request
+{
+    enum mqtt_method
+    {
+        pub_request=0;
+        sub_request=1;
+        unsub_request=2;
+    }
+    required mqtt_method method=1;
+    required Payload payload=2;
+
+}
+
+
+message mqtt_frame
+{
+    enum mqtt_frame_type 
+    {
+        mqtt_request=0;
+        mqtt_response=1;
+    }
+    required mqtt_frame_type frame_type=1;
+    optional Response response=2;
+    optional Request request=3;
+
+
+}
+
